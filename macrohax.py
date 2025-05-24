@@ -4,18 +4,16 @@ import time
 
 teclado = Controller()
 macro_ativo = False
-scroll_lock_ativado = False  # Estado inicial do Scroll Lock
+scroll_lock_ativado = False 
 
 def verificar_scroll_lock():
     """Verifica o estado atual do Scroll Lock (simulado)"""
-    # Nota: pynput não pode ler estados de LED, então simulamos com uma variável
     return scroll_lock_ativado
 
 def on_press(tecla):
     global macro_ativo
 
     try:
-        # Verifica se é Scroll Lock sendo pressionado
         if tecla == keyboard.Key.scroll_lock:
             global scroll_lock_ativado
             scroll_lock_ativado = not scroll_lock_ativado
@@ -23,7 +21,6 @@ def on_press(tecla):
             print(f"\nMacro {status}! (Scroll Lock)")
             return
 
-        # Se Scroll Lock estiver DESLIGADO e for 'L'
         if not verificar_scroll_lock() and tecla.char.lower() == 'l' and not macro_ativo:
             print("Tecla 'L' pressionada. Duplicando...")
             macro_ativo = True
@@ -39,7 +36,7 @@ def on_press(tecla):
             macro_ativo = False
             
     except AttributeError:
-        pass  # Ignora teclas especiais
+        pass
 
 with keyboard.Listener(on_press=on_press) as listener:
     print("=== MACRO DA TECLA L ===")
