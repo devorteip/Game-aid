@@ -5,10 +5,9 @@ import threading
 version = 0.2
 mouse = Controller()
 
-# Variáveis globais
 activation_button = Button.right
 is_holding = False
-click_delay = 0.05  # Delay entre cliques em segundos
+click_delay = 0.05
 
 def autoclick_loop():
     while True:
@@ -16,7 +15,7 @@ def autoclick_loop():
             mouse.click(Button.right)
             time.sleep(click_delay)
         else:
-            time.sleep(0.01)  # Pequeno delay para reduzir CPU usage
+            time.sleep(0.01)
 
 def on_click(x, y, button, pressed):
     global is_holding
@@ -36,7 +35,6 @@ def main():
     print("         CARREGANDO SISTEMA. . .")
     time.sleep(0.5)
     
-    # Configuração do botão
     print("\nOpções de botão de ativação:")
     print("   MBLEFT       MBRIGHT")
     print("     (1)          (2)")
@@ -57,8 +55,7 @@ def main():
             print("Opção inválida! Usando botão esquerdo padrão")
     except ValueError:
         print("Entrada inválida! Usando botão esquerdo padrão")
-    
-    # Configuração da velocidade
+
     try:
         cps = float(input('Quantos clicks por segundo? >> '))
         click_delay = 1 / cps if cps > 0 else 0.05
@@ -66,7 +63,6 @@ def main():
         print("Valor inválido! Usando 20 CPS padrão")
         click_delay = 0.05
     
-    # Inicia a thread de autoclick
     click_thread = threading.Thread(target=autoclick_loop, daemon=True)
     click_thread.start()
     
